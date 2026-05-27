@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PluviometrieRepository::class)]
 #[ApiResource]
+#[ORM\HasLifecycleCallbacks] //config horodatage
 class Pluviometrie
 {
     #[ORM\Id]
@@ -18,8 +19,14 @@ class Pluviometrie
     #[ORM\Column]
     private ?float $pluvio_heure = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "datetime")] //config horodatage
     private ?\DateTime $horodatage = null;
+
+    #[ORM\PrePersist]
+    public function setHorodatageValue(): void
+    {
+        $this->horodatage = new \DateTime();
+    }
 
     public function getId(): ?int
     {
