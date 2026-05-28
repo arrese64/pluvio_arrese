@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Graphiques</h1>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h3>Niveau des cuves (cm)</h3>
+                <canvas id="niveauChart" height="300"></canvas>
+            </div>
+            <div class="col-md-6">
+                <h3>Pluviométrie (mm)</h3>
+                <canvas id="pluvioChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        new Chart(document.getElementById('niveauChart'), {
+            type: 'line',
+            data: {
+                labels: [{% for cuve in cuves %}"{{ cuve.horodatage|date('Y-m-d H:i') }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Niveau (cm)',
+                    data: [{% for cuve in cuves %}{{ cuve.niveauCm }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            }
+        });
+
+        new Chart(document.getElementById('pluvioChart'), {
+            type: 'line',
+            data: {
+                labels: [{% for pluvio in pluviometries %}"{{ pluvio.horodatage|date('Y-m-d H:i') }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Pluviométrie (mm)',
+                    data: [{% for pluvio in pluviometries %}{{ pluvio.pluvioHeure }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                }]
+            }
+        });
+    </script>
+{% endblock %}
+
+

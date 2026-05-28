@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="text-center my-5">
+        <h1>Bienvenue sur le site PLUVIO</h1>
+        <p class="lead">Suivi des niveaux d'eau et de la pluviométrie.</p>
+        {% if app.user %}
+            <div class="mt-4">
+                <a href="{{ path('app_table_niveau') }}" class="btn btn-primary btn-lg me-3">
+                    Niveaux de la cuve
+                </a>
+                <a href="{{ path('app_table_pluvio') }}" class="btn btn-primary btn-lg me-3">
+                    Pluviométrie
+                </a>
+                <a href="{{ path('app_graphs') }}" class="btn btn-primary btn-lg">
+                    Graphiques
+                </a>
+            </div>
+        {% else %}
+            <div class="alert alert-info mt-4">
+                Connectez-vous pour accéder aux mesures.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Pluviométrie</h1>
+            <a href="{{ path('app_table_pluvio_export') }}" class="btn btn-success">
+                Exporter en Excel
+            </a>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th> {# <-- Modifié #}
+                <th>Pluviométrie (mm)</th>
+                <th>Horodatage</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pluvio in paginatedPluviometries %}
+                <tr>
+                    <td>{{ pluvio.id }}</td> {# <-- Modifié #}
+                    <td>{{ pluvio.pluvioHeure }}</td>
+                    <td>{{ pluvio.horodatage|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination moderne -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item {% if paginatedPluviometries.currentPageNumber == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ path('app_table_pluvio', {'page': 1}) }}" aria-label="Première page">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item {% if paginatedPluviometries.currentPageNumber == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ path('app_table_pluvio', {'page': paginatedPluviometries.currentPageNumber - 1}) }}" aria-label="Précédent">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% set totalPages = (pluviometries|length / 30 + 1) | round(0, 'ceil') %}
+                    {% set startPage = max(1, paginatedPluviometries.currentPageNumber - 2) %}
+                    {% set endPage = min(totalPages, paginatedPluviometries.currentPageNumber + 2) %}
+                    {% if startPage > 1 %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                    {% for page in startPage..endPage %}
+                        <li class="page-item {% if page == paginatedPluviometries.currentPageNumber %}active{% endif %}">
+                            <a class="page-link" href="{{ path('app_table_pluvio', {'page': page}) }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if endPage < totalPages %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                    <li class="page-item {% if paginatedPluviometries.currentPageNumber == totalPages %}disabled{% endif %}">
+                        <a class="page-link" href="{{ path('app_table_pluvio', {'page': paginatedPluviometries.currentPageNumber + 1}) }}" aria-label="Suivant">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item {% if paginatedPluviometries.currentPageNumber == totalPages %}disabled{% endif %}">
+                        <a class="page-link" href="{{ path('app_table_pluvio', {'page': totalPages}) }}" aria-label="Dernière page">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+
