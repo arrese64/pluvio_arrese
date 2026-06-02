@@ -7,7 +7,9 @@ use App\Repository\CuveRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CuveRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [new Get(), new GetCollection(), new Post()],
+)]
 #[ORM\HasLifecycleCallbacks] //config horodatage
 class Cuve
 {
