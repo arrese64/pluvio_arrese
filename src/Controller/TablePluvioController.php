@@ -16,6 +16,7 @@ class TablePluvioController extends AbstractController
     #[Route('/', name: 'app_table_pluvio')]
     public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $pluviometries = $em->getRepository(Pluviometrie::class)->findAll();
         usort($pluviometries, fn($a, $b) => $b->getId() <=> $a->getId());
 

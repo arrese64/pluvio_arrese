@@ -21,6 +21,9 @@
                 <a class="nav-link" href="{{ path('app_table_niveau') }}">Niveaux de la cuve</a>
                 <a class="nav-link" href="{{ path('app_table_pluvio') }}">Pluviométrie</a>
                 <a class="nav-link" href="{{ path('app_graphs') }}">Graphiques</a>
+                {% if 'ROLE_ADMIN' in app.user.roles %}
+                    <a class="nav-link" href="{{ path('app_admin_users') }}">CRUD (Utilisateurs)</a>
+                {% endif %}
             {% endif %}
         </div>
         <div class="navbar-nav ms-auto">
@@ -44,4 +47,5 @@
 {% block javascripts %}{% endblock %}
 </body>
 </html>
+
 

@@ -16,6 +16,7 @@ class TableNiveauController extends AbstractController
     #[Route('/', name: 'app_table_niveau')]
     public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $cuves = $em->getRepository(Cuve::class)->findAll();
         usort($cuves, fn($a, $b) => $b->getId() <=> $a->getId());
 

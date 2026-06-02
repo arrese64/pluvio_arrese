@@ -13,6 +13,7 @@ class GraphsController extends AbstractController
     #[Route('/graphs', name: 'app_graphs')]
     public function index(EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_CLIENT');
         $cuves = $em->getRepository(Cuve::class)->findAll();
         $pluviometries = $em->getRepository(Pluviometrie::class)->findAll();
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -18,7 +17,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = ['ROLE_CLIENT'];
 
     #[ORM\Column]
@@ -51,6 +50,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function addRole(string $role): self
+    {
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+        return $this;
+    }
+
+    public function removeRole(string $role): self
+    {
+        $this->roles = array_filter($this->roles, fn($r) => $r !== $role);
+        return $this;
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return in_array($role, $this->roles, true);
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -62,24 +80,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // Méthodes requises par UserInterface
     public function getUsername(): string
     {
         return $this->email;
-    }
-
-    public function eraseCredentials(): void
-    {
-        // Vide (pas de données sensibles en mémoire)
-    }
-
-    public function getSalt(): ?string
-    {
-        return null; // Inutile avec les algorithmes modernes
     }
 
     public function getUserIdentifier(): string
     {
         return $this->email;
     }
+
+    public function eraseCredentials(): void
+    {
+    }
 }
+
