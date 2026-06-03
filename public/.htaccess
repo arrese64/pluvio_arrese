@@ -33,7 +33,3 @@ Options -Indexes
     ExpiresDefault "access 1 month"
 </IfModule>
 
-# Sécurité : Désactive l'exécution de scripts dans les dossiers de cache et de logs
-<DirectoryMatch "^.*/\.(git|svn|ht|bzr|log|cache|sf)/">
-    Require all denied
-</DirectoryMatch>
