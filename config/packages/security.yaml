@@ -2,7 +2,8 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         App\Entity\User:
-            algorithm: plaintext
+            algorithm: bcrypt
+            cost: 12
 
     providers:
         app_user_provider:
