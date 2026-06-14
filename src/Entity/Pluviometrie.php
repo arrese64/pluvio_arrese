@@ -22,6 +22,7 @@ class Pluviometrie
     private ?int $id = null;
 
     #[ORM\Column]
+    #[SerializedName('pluvio_heure')]
     private ?float $pluvio_heure = null;
 
     #[ORM\Column(type: "datetime")] //config horodatage
