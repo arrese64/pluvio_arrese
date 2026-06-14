@@ -22,6 +22,7 @@ class Cuve
     private ?int $id = null;
 
     #[ORM\Column]
+    #[SerializedName('niveau_cm')]
     private ?float $niveau_cm = null;
 
     #[ORM\Column(type: "datetime")] //config horodatage
