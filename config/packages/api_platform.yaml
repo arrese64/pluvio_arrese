@@ -6,4 +6,3 @@ api_platform:
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
     name_converter: ~
-    property_name_collection_format: ~
