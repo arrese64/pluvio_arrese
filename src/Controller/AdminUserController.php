@@ -30,6 +30,7 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->get('password')->getData());
             $user->setPassword($passwordHasher->hashPassword($user, $form->get('password')->getData()));
             $em->persist($user);
             $em->flush();
