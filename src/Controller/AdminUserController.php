@@ -31,7 +31,7 @@ class AdminUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($passwordHasher->hashPassword($user, $form->get('password')->getData()));
-            dd($user->getPassword());
+            dd($passwordHasher->hashPassword($user, 'test123'));
             $em->persist($user);
             $em->flush();
             $this->addFlash('success', 'Utilisateur créé avec succès.');
