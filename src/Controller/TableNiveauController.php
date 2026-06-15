@@ -23,7 +23,7 @@ class TableNiveauController extends AbstractController
         $paginatedCuves = $paginator->paginate(
             $cuves,
             $request->query->getInt('page', 1),
-            30
+            5
         );
 
         return $this->render('table_niveau/index.html.twig', [
